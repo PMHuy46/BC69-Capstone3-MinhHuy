@@ -1,0 +1,6 @@
+export * from './Home'
+export * from './Register'
+export * from './PhimDetail'
+export * from './Login'
+export * from './AddFilm'
+export * from './AdminFilm'

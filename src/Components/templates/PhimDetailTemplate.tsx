@@ -1,0 +1,126 @@
+import { useParams } from "react-router-dom";
+import { useDataDetail, useGetShowTimeById } from "../../Hooks/api";
+import { Button, Collapse, Modal, Tabs } from "antd";
+import { useState } from "react";
+import dayjs from "dayjs";
+import styled from "styled-components";
+import { Phim } from "../../@types";
+import { ModalDatVe } from "../ui";
+import { quanLyNguoiDungActions } from "../../store/quanLyNguoiDung";
+import { useAppDispatch } from "../../store";
+
+const Ghe = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 6px;
+  background: red;
+  // viết scss được trong này
+  &.gheThuong {
+    background-color: #111;
+  }
+  &.gheVip {
+    background-color: green;
+  }
+  &.daDat {
+    background-color: yellow;
+  }
+`;
+
+export const PhimDetailTemplate = () => {
+  const { id = "" } = useParams();
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const { data } = useDataDetail.getDetailPhim("maPhim", id);
+  let phimDetail = data as Phim;
+  const { data: showTime } = useGetShowTimeById({ id });
+  const dispatch = useAppDispatch();
+
+  return (
+    <div>
+      <div className="flex justify-evenly gap-[50px]">
+        <div>
+          <img src={phimDetail?.hinhAnh} alt="..." />
+        </div>
+        <div>
+          <p>{phimDetail?.tenPhim}</p>
+          <p>{phimDetail?.moTa}</p>
+        </div>
+      </div>
+      <div className="h-[22vh]">
+        <Tabs
+          items={showTime?.heThongRapChieu.map((item) => ({
+            key: item.maHeThongRap,
+            label: (
+              <div className="uppercase font-[700]">{item.tenHeThongRap}</div>
+            ),
+            children: (
+              <div>
+                <Collapse
+                  items={item?.cumRapChieu.map((cumRap) => ({
+                    key: cumRap.maCumRap,
+                    label: (
+                      <div>
+                        <p className="font-[600] text-[16px]">
+                          {cumRap.tenCumRap}
+                        </p>
+                        <p className="text-[14px] italic">{cumRap.diaChi}</p>
+                      </div>
+                    ),
+                    children: (
+                      <div className="flex gap-10 flex-wrap">
+                        {cumRap.lichChieuPhim.map((lichChieu) => (
+                          <Button
+                            key={lichChieu.maLichChieu}
+                            type="primary"
+                            onClick={() => {
+                              setIsOpenModal(true);
+                              dispatch(
+                                quanLyNguoiDungActions.setMaLichChieu(
+                                  lichChieu.maLichChieu
+                                )
+                              );
+                            }}
+                          >
+                            {dayjs(lichChieu.ngayChieuGioChieu).format(
+                              "DD-MM-YY , HH:mm"
+                            )}
+                            -
+                            {dayjs(lichChieu.ngayChieuGioChieu)
+                              .add(lichChieu.thoiLuong, "minute")
+                              .format("HH:mm")}
+                          </Button>
+                        ))}
+                      </div>
+                    ),
+                  }))}
+                />
+              </div>
+            ),
+          }))}
+        />
+      </div>
+      <Modal
+        open={isOpenModal}
+        onCancel={() => {
+          setIsOpenModal(false);
+          dispatch(quanLyNguoiDungActions.setMaLichChieu(""));
+        }}
+        width={1000}
+      >
+        <div>
+          <div>
+            <p className="text-[30px] font-bold text-center mb-[30px] text-yellow-500">
+              Đặt vé
+            </p>
+            <div>
+              <ModalDatVe />
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+};
