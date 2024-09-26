@@ -76,7 +76,7 @@ export const HomeTemplate = () => {
           onChange={(value) => {
             setMaNhom(value);
           }}
-          options={Array.from({ length: 15 }, (v, i) => ({
+          options={Array.from({ length: 15 }, (_, i) => ({
             value: i + 1 < 10 ? `GP0${i + 1}` : `GP${i + 1}`,
             label: i + 1 < 10 ? `GP0${i + 1}` : `GP${i + 1}`,
           }))}

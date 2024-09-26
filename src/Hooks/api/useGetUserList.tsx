@@ -1,12 +1,12 @@
-import { useQueries, useQuery } from '@tanstack/react-query'
+import { Query, useQueries, useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { quanLyNguoiDungServices } from '../../services'
 import { objectToQueryString } from '../../utils'
 
-export const useGetUserList = (maNhom:string) => {
+export const useGetUserList = (value:"") => {
 const query = useQuery({
-    queryKey:["maNhom",maNhom],
-    queryFn:()=>quanLyNguoiDungServices.getListUser(objectToQueryString({'maNhom':maNhom}))
+    queryKey:["maNhom",value],
+    queryFn:()=>quanLyNguoiDungServices.getListUser(value)
 })
 
   return {

@@ -1,13 +1,11 @@
 import { useRoutes } from "react-router-dom";
 import { AuthLayout } from "../Components";
-import {  Home, PhimDetail, Register } from "../Pages";
-import { Login } from "../Pages/Login";
 import { PATH } from "../constants";
+import { AddFilm, AddUser, AdminFilm, Home, Login, PhimDetail, Register } from "../Pages";
 import { MainLayout } from "../Components/Layouts/MainLayout";
 import { AdminLayout } from "../Components/Layouts/AdminLayout";
-import { AdminFilm } from "../Pages/AdminFilm";
-import { AddFilm } from "../Pages/AddFilm";
-import { AdminUser } from "../Pages/AdminUser";
+import { AdminUser } from "../Pages/Admin/AdminUser";
+
 
 export const routers = () =>
   useRoutes([
@@ -50,7 +48,11 @@ export const routers = () =>
         },
         {
           path:PATH.addFilm,
-          element:<AddFilm/>
+          element:<AddFilm />
+        },
+        {
+          path:PATH.addUser,
+          element:<AddUser/>
         }
       ]
     }

@@ -1,19 +1,27 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, DatePicker, Input, Switch } from "antd";
+import { Button, DatePicker, Input, message, Switch, Upload } from "antd";
 import { AddFilmSchema, AddFilmSchemaType } from "../../schemas";
 import moment from "moment";
 import { quanLyPhimServices } from "../../services";
 import { toast } from "react-toastify";
 import { useDropzone } from "react-dropzone";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import dayjs from "dayjs";
+import { createFileFromUrl } from "../../utils";
 
 export const AddFilmTemplate = () => {
   const formData = new FormData();
+  // const { state } = useLocation();
+  // console.log(state);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm<AddFilmSchemaType>({
     mode: "onChange",
     resolver: zodResolver(AddFilmSchema),
@@ -26,22 +34,48 @@ export const AddFilmTemplate = () => {
   const onSubmit: SubmitHandler<AddFilmSchemaType> = async (
     values: AddFilmSchemaType
   ) => {
-    console.log(values);
     for (const [key, value] of Object.entries(values)) {
-      if (key !== "hinhAnh") {
+      if (key !== "File") {
         formData.append(key, value);
       } else {
-        formData.append("hinhAnh", value,);
+        formData.append("File", value, value.name);
       }
     }
+    // if (state) {
+    //   try {
+    //     const ressult = await quanLyPhimServices.updateFilm(state);
+    //     toast.success("Thêm phim thành công");
+    //   } catch (error) {
+    //     toast.error("Không thành công");
+    //   }
+    // } else {
+    // }
     try {
       const result = await quanLyPhimServices.addFilm(formData);
-      console.log(result);
-      toast.success("Xóa phim thành công");
+      toast.success("Thêm phim thành công");
+      reset();
     } catch (error) {
       toast.error("Không thành công");
     }
   };
+
+  // useEffect(() => {
+  //   if (state) {
+  //     setValue("maNhom", state.maNhom);
+  //     setValue("tenPhim", state.tenPhim);
+  //     setValue("trailer", state.trailer);
+  //     setValue("moTa", state.moTa);
+  //     setValue("ngayKhoiChieu", dayjs(state.ngayKhoiChieu));
+  //     setValue("dangChieu", state.dangChieu);
+  //     setValue("sapChieu", state.sapChieu);
+  //     setValue("hot", state.hot);
+  //     setValue("danhGia", state.danhGia);
+  //     setValue("File", state.hinhAnh);
+
+  //     createFileFromUrl(state.hinhAnh)
+
+  //   }
+  // }, [setValue, state]);
 
   return (
     <div className="ms-[30px]">
@@ -67,7 +101,6 @@ export const AddFilmTemplate = () => {
             <p className="text-red-500">{errors.maNhom.message}</p>
           )}
         </div>
-
         {/* tên phim */}
         <p className=" text-[16px] text-end ">
           Tên phim<span className="text-red-500">*</span>:
@@ -212,7 +245,6 @@ export const AddFilmTemplate = () => {
             <p className="text-red-500">{errors.danhGia.message}</p>
           )}
         </div>
-
         {/* hình ảnh */}
         <p className=" text-[16px] text-end ">
           Hình ảnh<span className="text-red-500">*</span>:
@@ -221,39 +253,46 @@ export const AddFilmTemplate = () => {
           <Controller
             name="File"
             control={control}
-            render={({ field :{onChange,value}}) => {
-              const { getRootProps, getInputProps } = useDropzone({
-                onDrop: (acceptedFiles) => {
-                  onChange(acceptedFiles[0]); // Lấy tệp đầu tiên
-                },
-              });
-
-              return (
-                <div {...getRootProps({ className: "dropzone" })}>
-                  <input {...getInputProps()} />
-                  <Button type="primary">
-                    Kéo, thả hoặc nhấp để thêm ảnh
-                  </Button>
-                  {value && <p>Tệp đã chọn: {value.name}</p>}
-                </div>
-              );
-            }}
-           
+            render={({ field: { onChange } }) => (
+              <Upload
+                beforeUpload={(file) => {
+                  onChange(file);
+                  return false;
+                }}
+                maxCount={1}
+              >
+                <Button>Upload File</Button>
+              </Upload>
+            )}
           />
           {errors.File && (
             <p className="text-red-500">{errors?.File.message as string}</p>
           )}
         </div>
 
-        <Button
-          htmlType="submit"
-          type="primary"
-          danger
-          className="!w-full mt-[30px] h-[50px]   "
-        >
-          Đăng ký
-        </Button>
+        <div className="col-span-2 text-end">
+          {/* {state ? (
+            <Button
+              htmlType="submit"
+              type="primary"
+              danger
+              className=" mt-[30px] h-[50px]   "
+            >
+              Update
+            </Button>
+          ) : (
+          )} */}
+            <Button
+              htmlType="submit"
+              type="primary"
+              danger
+              className=" mt-[30px] h-[50px]   "
+            >
+              Đăng ký
+            </Button>
+        </div>
       </form>
+      
     </div>
   );
 };

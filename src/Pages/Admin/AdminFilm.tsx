@@ -1,5 +1,5 @@
 import React from "react";
-import { AdminFilmTemplate } from "../Components/templates/AdminFilmTemplate";
+import { AdminFilmTemplate } from "../../Components";
 
 export const AdminFilm = () => {
   return (

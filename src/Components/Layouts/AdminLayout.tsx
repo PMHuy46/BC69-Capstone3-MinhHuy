@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import {
-  DesktopOutlined,
-  FileOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { DesktopOutlined, FileOutlined, UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Avatar,  Button, Layout, Menu, Popover, theme } from "antd";
+import { Avatar, Button, Layout, Menu, Popover, theme } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { PATH } from "../../constants";
 import { useQuanLyNguoiDungSelector } from "../../store/quanLyNguoiDung";
 
-const {  Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -29,10 +25,13 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("User", "/admin", <UserOutlined />),
-  getItem("Films", "film", <FileOutlined />,[
-    getItem('Film data','admin/film'),
-    getItem('Add New','/admin/addFilm')
+  getItem("User", "admin", <UserOutlined />, [
+    getItem("Quản lý user", "/admin"),
+    getItem("Add New", "/admin/addUser"),
+  ]),
+  getItem("Films", "film", <FileOutlined />, [
+    getItem("Film data", "admin/film"),
+    getItem("Add New", "/admin/addFilm"),
   ]),
   getItem("ShowTime", "/showtime", <DesktopOutlined />),
 ];
@@ -47,7 +46,7 @@ export const AdminLayout: React.FC = () => {
     navigate(e.key);
   };
 
-  const {user} = useQuanLyNguoiDungSelector()
+  const { user } = useQuanLyNguoiDungSelector();
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -55,9 +54,11 @@ export const AdminLayout: React.FC = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div className="flex justify-center items-center py-3">
+        <div className="flex justify-center items-center py-3 flex-wrap">
           <img src="/images/lC22izJ.png" className="h-14" alt="" />
-          <p className="text-white text-[16px] font-[700] px-1">Admin Page</p>
+          <p className="text-white text-[16px] font-[700] px-1 text-center">
+            Admin Page
+          </p>
         </div>
         <div className="demo-logo-vertical" />
         <Menu
@@ -85,11 +86,7 @@ export const AdminLayout: React.FC = () => {
                 content={
                   <div className="flex flex-col p-[12px]">
                     <div>
-                      <Button
-                        className="w-full"
-                        onClick={() => {
-                        }}
-                      >
+                      <Button className="w-full" onClick={() => {}}>
                         Đăng xuất
                       </Button>
                     </div>
@@ -106,9 +103,9 @@ export const AdminLayout: React.FC = () => {
           ) : (
             <div>
               <Button
-              type="primary"
+                type="primary"
                 onClick={() => {
-                  navigate(PATH.login)
+                  navigate(PATH.login);
                 }}
               >
                 Đăng Nhập
@@ -119,7 +116,6 @@ export const AdminLayout: React.FC = () => {
         <Content style={{ margin: "0 16px" }}>
           <div
             style={{
-              padding: 24,
               minHeight: 360,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,

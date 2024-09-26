@@ -1,5 +1,5 @@
 import React from 'react'
-import { AddFilmTemplate } from '../Components/templates/AddFilmTemplate'
+import { AddFilmTemplate } from '../../Components'
 
 export const AddFilm = () => {
   return (

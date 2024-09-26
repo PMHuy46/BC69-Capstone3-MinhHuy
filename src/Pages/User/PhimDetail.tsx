@@ -1,4 +1,4 @@
-import { PhimDetailTemplate } from "../Components";
+import { PhimDetailTemplate } from "../../Components";
 
 export const PhimDetail = () => {
   

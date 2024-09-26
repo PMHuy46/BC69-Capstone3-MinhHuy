@@ -1,5 +1,4 @@
-import { Banner } from "../Components";
-import { HomeTemplate } from "../Components/templates/HomeTemplate";
+import { Banner, HomeTemplate } from "../../Components";
 
 export const Home = () => {
   return (

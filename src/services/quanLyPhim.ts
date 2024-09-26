@@ -15,5 +15,7 @@ export const quanLyPhimServices = {
     getDetailPhim: (query = '') => api.get<HttpResponse<Phim>>(`/LayThongTinPhim${query}`),
     getBanner: (query = '') => api.get<HttpResponse<Banner[]>>(`/LayDanhSachBanner${query}`),
     deleteFilm: (query = '') => apiBearer.delete<HttpResponse<string>>(`/XoaPhim${query}`),
-    addFilm: (payload:FormData) => api.post<HttpResponse<any>>('/ThemPhimUploadHinh', payload)
+    addFilm: (payload:any) => api.post<HttpResponse<string>>('/ThemPhimUploadHinh', payload),
+    updateFilm: (payload:any) => apiBearer.post<HttpResponse<string>>('/CapNhatPhimUpload', payload),
+   
 }
