@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import { DesktopOutlined, FileOutlined, UserOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Avatar, Button, Layout, Menu, Popover, theme } from "antd";
+import { Avatar, Button, Layout, Menu, MenuProps, Popover, theme } from "antd";
+import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { PATH } from "../../constants";
 import { useQuanLyNguoiDungSelector } from "../../store/quanLyNguoiDung";
+import { PATH } from "../../constants";
+import {
+  FileOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+
 
 const { Content, Footer, Sider } = Layout;
 
@@ -32,8 +35,8 @@ const items: MenuItem[] = [
   getItem("Films", "film", <FileOutlined />, [
     getItem("Film data", "admin/film"),
     getItem("Add New", "/admin/addFilm"),
+    getItem("ShowTime", "/admin/showtime",),
   ]),
-  getItem("ShowTime", "/showtime", <DesktopOutlined />),
 ];
 
 export const AdminLayout: React.FC = () => {

@@ -1,4 +1,4 @@
-import { Banner, Phim } from "../@types";
+import { Banner, LichChieu, Phim } from "../@types";
 import { apiInstance, apiInstanceBearer } from "../constants";
 
 const api = apiInstance.create({
@@ -16,5 +16,5 @@ export const quanLyPhimServices = {
     deleteFilm: (query = '') => apiBearer.delete<HttpResponse<string>>(`/XoaPhim${query}`),
     addFilm: (payload:any) => api.post<HttpResponse<string>>('/ThemPhimUploadHinh', payload),
     updateFilm: (payload:any) => apiBearer.post<HttpResponse<string>>('/CapNhatPhimUpload', payload),
-   
+    createShowTime:(payload:LichChieu)=>apiBearer.post<HttpResponse<LichChieu>>('/TaoLichChieu',payload)
 }

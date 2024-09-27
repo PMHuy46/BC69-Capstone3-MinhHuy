@@ -1,13 +1,19 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, DatePicker, Input,  Switch, Upload } from "antd";
+import { Button, DatePicker, Image, Input, Switch, Upload } from "antd";
 import { AddFilmSchema, AddFilmSchemaType } from "../../schemas";
 import moment from "moment";
 import { quanLyPhimServices } from "../../services";
 import { toast } from "react-toastify";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import dayjs from "dayjs";
+import { sleep } from "../../utils";
 
 export const AddFilmTemplate = () => {
   const formData = new FormData();
+  const { state } = useLocation();
+  const navigate = useNavigate()
 
   const {
     control,
@@ -31,20 +37,51 @@ export const AddFilmTemplate = () => {
       if (key !== "File") {
         formData.append(key, value);
       } else {
-        formData.append("File", value, value.name);
+        if (value) {
+          formData.append("File", value as Blob, value.name);
+        }
+        else{
+          formData.append("File",value)
+        }
       }
     }
-   
-    try {
-    await quanLyPhimServices.addFilm(formData);
-      toast.success("Thêm phim thành công");
-      reset();
-    } catch (error) {
-      toast.error("Không thành công");
+    if (state) {
+      formData.append('maPhim',state.maPhim)
+      formData.append('biDanh',state.biDanh)
+      
+      try {
+        await quanLyPhimServices.updateFilm(formData);
+        toast.success("Thêm phim thành công");
+        sleep(2000)
+        navigate(-1)
+      } catch (error) {
+        toast.error('không thành công')
+      }
+    } else {
+      try {
+        await quanLyPhimServices.addFilm(formData);
+        toast.success("Thêm phim thành công");
+        reset();
+      } catch (error) {
+        toast.error("Không thành công");
+      }
     }
   };
 
- 
+  useEffect(() => {
+    if (state) {
+      setValue("maNhom", state.maNhom);
+      setValue("tenPhim", state.tenPhim);
+      setValue("trailer", state.trailer);
+      setValue("moTa", state.moTa);
+      setValue("ngayKhoiChieu", dayjs(state.ngayKhoiChieu)); //ở đây sửa giùm em với nha
+      setValue("dangChieu", state.dangChieu);
+      setValue("sapChieu", state.sapChieu);
+      setValue("hot", state.hot);
+      setValue("danhGia", state.danhGia);
+      setValue("File", null);
+    }
+  }, [state, setValue]);
 
   return (
     <div className="ms-[30px]">
@@ -219,28 +256,38 @@ export const AddFilmTemplate = () => {
           Hình ảnh<span className="text-red-500">*</span>:
         </p>
         <div>
-          <Controller
-            name="File"
-            control={control}
-            render={({ field: { onChange } }) => (
-              <Upload
-                beforeUpload={(file) => {
-                  onChange(file);
-                  return false;
-                }}
-                maxCount={1}
-              >
-                <Button>Upload File</Button>
-              </Upload>
+          <div>
+            <Controller
+              name="File"
+              control={control}
+              render={({ field: { onChange } }) => (
+                <Upload
+                  beforeUpload={(file) => {
+                    onChange(file);
+                    return false;
+                  }}
+                  maxCount={1}
+                >
+                  <Button>Upload File</Button>
+                </Upload>
+              )}
+            />
+            {errors.File && (
+              <p className="text-red-500">{errors?.File.message as string}</p>
             )}
-          />
-          {errors.File && (
-            <p className="text-red-500">{errors?.File.message as string}</p>
-          )}
+          </div>
         </div>
+        {state? (
+          <div className="col-span-2 grid grid-cols-2 gap-3">
+            <p className=" text-[16px] text-end ">Ảnh cũ:</p>
+            <Image width={200} src={state.hinhAnh} />
+          </div>
+        ) : (
+          <></>
+        )}
 
         <div className="col-span-2 text-end">
-          {/* {state ? (
+          {state ? (
             <Button
               htmlType="submit"
               type="primary"
@@ -250,7 +297,6 @@ export const AddFilmTemplate = () => {
               Update
             </Button>
           ) : (
-          )} */}
             <Button
               htmlType="submit"
               type="primary"
@@ -259,9 +305,9 @@ export const AddFilmTemplate = () => {
             >
               Đăng ký
             </Button>
+          )}
         </div>
       </form>
-      
     </div>
   );
 };

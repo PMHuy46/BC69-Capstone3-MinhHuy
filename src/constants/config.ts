@@ -6,5 +6,6 @@ export const PATH = {
     admin:'/admin',
     addUser:'/admin/addUser',
     adminFilm:'/admin/film',
-    addFilm:'/admin/addfilm'
+    addFilm:'/admin/addfilm',
+    showtime:'/admin/showtime'
 }

@@ -1,13 +1,14 @@
-import { Input, Select } from "antd";
 import { ChangeEvent, useState } from "react";
-import { quanLyNguoiDungServices } from "../../services";
+import { useNavigate } from "react-router-dom";
+import { useGetUserList } from "../../Hooks/api";
 import { objectToQueryString } from "../../utils";
 import { useQueryClient } from "@tanstack/react-query";
-import { useGetUserList } from "../../Hooks/api/useGetUserList";
-import { useQuanLyNguoiDungSelector } from "../../store/quanLyNguoiDung";
+import { Input, Select } from "antd";
+import { quanLyNguoiDungServices } from "../../services";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { PATH } from "../../constants";
+import { useQuanLyNguoiDungSelector } from "../../store/quanLyNguoiDung";
+
 
 export const AdminUserTemplate = () => {
   const [maNhom, setMaNhom] = useState("GP01");
@@ -98,7 +99,7 @@ export const AdminUserTemplate = () => {
             <button
               className="text-yellow-400 font-[600]"
               onClick={() => {
-                navigate(PATH.addUser, { state: item });
+                navigate(PATH.addUser, { state: {...item,'maNhom':maNhom }});
               }}
             >
               Sửa

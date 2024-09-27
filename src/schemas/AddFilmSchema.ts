@@ -12,7 +12,8 @@ export const AddFilmSchema = z.object({
     hot: z.boolean({ message: "chọn ngày khởi chiếu" }).optional(),
     danhGia: z.string({ message: 'Nhập số sao' }),
     ngayKhoiChieu: z.any({ message: 'aaaa' }).refine(value => value !== null && value !== undefined, { message: 'Trường này không được để trống' }).transform(data => (dayjs(data).format('DD/MM/YYYY'))),
-    File: z.any().refine(value => value !== null && value !== undefined, { message: 'Trường này không được để trống' }),
+    File: z.any().refine(value => value !== '', { message: 'Trường này không được để trống' }).nullable() 
+  ,
 
 })
 

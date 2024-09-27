@@ -18,3 +18,10 @@ export interface Banner {
   maPhim: number
   hinhAnh: string
 }
+
+export interface LichChieu {
+  maPhim: number
+  ngayChieuGioChieu: string
+  maRap: string
+  giaVe: number
+}

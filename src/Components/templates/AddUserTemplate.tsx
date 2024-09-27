@@ -1,16 +1,17 @@
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { AddUserSchema, AddUserSchemaType } from "../../schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Select } from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useQuanLyNguoiDungSelector } from "../../store/quanLyNguoiDung";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AddUserSchema, AddUserSchemaType } from "../../schemas";
 import { quanLyNguoiDungServices } from "../../services";
 import { toast } from "react-toastify";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Button, Input, Select } from "antd";
 
 export const AddUserTemplate = () => {
   const { user } = useQuanLyNguoiDungSelector();
   const { state } = useLocation();
+  console.log(state)
   const navigate = useNavigate()
 
   const {
@@ -47,14 +48,16 @@ export const AddUserTemplate = () => {
   };
 
   useEffect(() => {
-    setValue("hoTen", state.hoTen);
-    setValue("email", state.email);
-    setValue("maNhom", state.maNhom);
-    setValue("soDt", state.soDt);
-    setValue("maNhom", state.maNhom);
-    setValue("taiKhoan", state.taiKhoan);
-    setValue("matKhau", state.matKhau);
-    setValue("maLoaiNguoiDung", state.maLoaiNguoiDung);
+    if(state){
+        setValue("hoTen", state.hoTen);
+      setValue("email", state.email);
+        setValue("maNhom", state.maNhom);
+        setValue("soDt", state.soDT);
+        setValue("maNhom", state.maNhom);
+        setValue("taiKhoan", state.taiKhoan);
+        setValue("matKhau", state.matKhau);
+      setValue("maLoaiNguoiDung", state.maLoaiNguoiDung);
+    }
   }, [setValue, state]);
 
   return (

@@ -38,4 +38,28 @@ export interface ThongTinLichChieu {
     thoiLuong: number
   }
   
- 
+  export interface ListHeThongRap {
+    maHeThongRap: string
+    tenHeThongRap: string
+    biDanh: string
+    logo: string
+  }
+  
+  export interface ListCumRap {
+    maCumRap: string
+    tenCumRap: string
+    diaChi: string
+    danhSachRap: DanhSachRap[]
+  }
+  
+  export interface DanhSachRap {
+    maRap: number
+    tenRap: string
+  }
+
+  export interface TaoLichChieu {
+    maPhim: number
+    ngayChieuGioChieu: string
+    maRap: string
+    giaVe: string
+ }
