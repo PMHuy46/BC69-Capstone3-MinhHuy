@@ -1,7 +1,5 @@
-import { Query, useQueries, useQuery } from '@tanstack/react-query'
-import React from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { quanLyNguoiDungServices } from '../../services'
-import { objectToQueryString } from '../../utils'
 
 export const useGetUserList = (value:"") => {
 const query = useQuery({

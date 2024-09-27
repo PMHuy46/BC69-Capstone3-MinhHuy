@@ -1,20 +1,13 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, DatePicker, Input, message, Switch, Upload } from "antd";
+import { Button, DatePicker, Input,  Switch, Upload } from "antd";
 import { AddFilmSchema, AddFilmSchemaType } from "../../schemas";
 import moment from "moment";
 import { quanLyPhimServices } from "../../services";
 import { toast } from "react-toastify";
-import { useDropzone } from "react-dropzone";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import dayjs from "dayjs";
-import { createFileFromUrl } from "../../utils";
 
 export const AddFilmTemplate = () => {
   const formData = new FormData();
-  // const { state } = useLocation();
-  // console.log(state);
 
   const {
     control,
@@ -41,17 +34,9 @@ export const AddFilmTemplate = () => {
         formData.append("File", value, value.name);
       }
     }
-    // if (state) {
-    //   try {
-    //     const ressult = await quanLyPhimServices.updateFilm(state);
-    //     toast.success("Thêm phim thành công");
-    //   } catch (error) {
-    //     toast.error("Không thành công");
-    //   }
-    // } else {
-    // }
+   
     try {
-      const result = await quanLyPhimServices.addFilm(formData);
+    await quanLyPhimServices.addFilm(formData);
       toast.success("Thêm phim thành công");
       reset();
     } catch (error) {
@@ -59,23 +44,7 @@ export const AddFilmTemplate = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (state) {
-  //     setValue("maNhom", state.maNhom);
-  //     setValue("tenPhim", state.tenPhim);
-  //     setValue("trailer", state.trailer);
-  //     setValue("moTa", state.moTa);
-  //     setValue("ngayKhoiChieu", dayjs(state.ngayKhoiChieu));
-  //     setValue("dangChieu", state.dangChieu);
-  //     setValue("sapChieu", state.sapChieu);
-  //     setValue("hot", state.hot);
-  //     setValue("danhGia", state.danhGia);
-  //     setValue("File", state.hinhAnh);
-
-  //     createFileFromUrl(state.hinhAnh)
-
-  //   }
-  // }, [setValue, state]);
+ 
 
   return (
     <div className="ms-[30px]">

@@ -1,4 +1,4 @@
-import { Avatar, Button, Collapse, Divider, Modal, Popover, Tabs } from "antd";
+import { Avatar, Button, Collapse, Modal, Popover } from "antd";
 import { PATH } from "../../constants";
 import { useAppDispatch } from "../../store";
 import {

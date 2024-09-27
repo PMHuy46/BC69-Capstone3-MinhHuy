@@ -6,9 +6,7 @@ export const createFileFromUrl = async (url: string) => {
     }
     const blob = await response.blob();
     console.log(blob)
-    // const newFile = new File([blob], "downloadedFile.png", {
-    //   type: blob.type,
-    // });
+  
   } catch (error) {
     console.error("Error fetching the file:", error);
   }

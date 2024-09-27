@@ -53,6 +53,7 @@ export interface ThongTinTaiKhoan {
     tenRap: string
     maGhe: number
     tenGhe: string
+    giaVe:number
   }
   
   export interface ListUser {

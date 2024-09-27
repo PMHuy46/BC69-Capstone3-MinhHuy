@@ -18,7 +18,6 @@ export const HomeTemplate = () => {
   const phimData = data as Phim[]; // nó cứ báo là không nhận được kiểu dữ liệu của data là sao nhỉ giải giúp em với
   if (isFetching) {
     // sao chỗ này trên máy em nó trắng trơn vậy anh ơi không có hiện gì hết???
-
     return (
       <div>
         <Skeleton.Input className="h-[350px] !w-full bg-white text-white " />

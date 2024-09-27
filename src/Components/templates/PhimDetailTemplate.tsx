@@ -3,32 +3,11 @@ import { useDataDetail, useGetShowTimeById } from "../../Hooks/api";
 import { Button, Collapse, Modal, Tabs } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
-import styled from "styled-components";
 import { Phim } from "../../@types";
 import { ModalDatVe } from "../ui";
 import { quanLyNguoiDungActions } from "../../store/quanLyNguoiDung";
 import { useAppDispatch } from "../../store";
 
-const Ghe = styled.div`
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  border-radius: 6px;
-  background: red;
-  // viết scss được trong này
-  &.gheThuong {
-    background-color: #111;
-  }
-  &.gheVip {
-    background-color: green;
-  }
-  &.daDat {
-    background-color: yellow;
-  }
-`;
 
 export const PhimDetailTemplate = () => {
   const { id = "" } = useParams();

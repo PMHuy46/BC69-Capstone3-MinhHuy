@@ -1,6 +1,5 @@
 import { Banner, Phim } from "../@types";
 import { apiInstance, apiInstanceBearer } from "../constants";
-import { AddFilmSchemaType } from "../schemas";
 
 const api = apiInstance.create({
     baseURL: 'https://movienew.cybersoft.edu.vn/api/QuanLyPhim'

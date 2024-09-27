@@ -1,6 +1,6 @@
 export interface DanhSachPhongVe {
   thongTinPhim: ThongTinPhim
-  danhSachGhe: DanhSachGhe[]
+  danhSachGhe: DanhSachGheNgoi[]
 }
 
 export interface ThongTinPhim {
@@ -19,7 +19,7 @@ export enum LoaiGhe {
   VIP= 'Vip'
 }
 
-export interface DanhSachGhe {
+export interface DanhSachGheNgoi {
   maGhe: number
   tenGhe: string
   maRap: number

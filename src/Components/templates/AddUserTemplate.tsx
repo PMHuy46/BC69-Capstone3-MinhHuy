@@ -18,7 +18,6 @@ export const AddUserTemplate = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-    reset,
   } = useForm<AddUserSchemaType>({
     mode: "onChange",
     resolver: zodResolver(AddUserSchema),

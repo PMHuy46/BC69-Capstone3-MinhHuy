@@ -1,5 +1,4 @@
-import React from "react";
-import { AddUserTemplate, AdminUserTemplate } from "../../Components";
+import { AddUserTemplate } from "../../Components";
 
 export const AddUser = () => {
   return (

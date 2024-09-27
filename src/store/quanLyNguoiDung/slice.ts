@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { quanLyNguoiDungThunks } from "./thunk";
-import { DanhSachGhe, DanhSachVe, DanhSachVeDat, LoginAPIResponse } from "../../@types";
+import { DanhSachGhe, DanhSachVe,  LoginAPIResponse } from "../../@types";
 import { storage } from "../../utils";
 import { localStorageKey } from "../../constants";
 import { RegisterSchemaType } from "../../schemas";
@@ -33,10 +33,7 @@ export const { reducer: quanLyNguoiDungReducer, actions: quanLyNguoiDungActions 
             state.user = payload
             localStorage.setItem(localStorageKey.USER, JSON.stringify(payload))
         },
-        setAdmin: (state, { payload }) => {
-            state.admin = payload
-            localStorage.setItem(localStorageKey.ADMIN, JSON.stringify(payload))
-        },
+       
         logOut: (state) => {
             state.user = null
             localStorage.removeItem(localStorageKey.USER)
