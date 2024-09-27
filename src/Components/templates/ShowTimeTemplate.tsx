@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, DatePicker, Input, Result, Select } from "antd";
+import { Button, DatePicker, Input,  Select } from "antd";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import {
@@ -13,10 +13,9 @@ import {
 import { useState } from "react";
 import { objectToQueryString } from "../../utils";
 import moment from "moment";
-import { quanLyDatVe, quanLyRap } from "../../services";
+import { quanLyDatVe } from "../../services";
 import { toast } from "react-toastify";
 import { useQuanLyNguoiDungSelector } from "../../store/quanLyNguoiDung";
-import { TaoLichChieu } from "../../@types";
 
 export const ShowTimeTemplate = () => {
   const { user } = useQuanLyNguoiDungSelector();

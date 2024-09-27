@@ -74,7 +74,7 @@ export const AddFilmTemplate = () => {
       setValue("tenPhim", state.tenPhim);
       setValue("trailer", state.trailer);
       setValue("moTa", state.moTa);
-      setValue("ngayKhoiChieu", dayjs(state.ngayKhoiChieu)); //ở đây sửa giùm em với nha
+      setValue("ngayKhoiChieu", dayjs(state.ngayKhoiChieu) as any); //ở đây sửa giùm em với nha
       setValue("dangChieu", state.dangChieu);
       setValue("sapChieu", state.sapChieu);
       setValue("hot", state.hot);

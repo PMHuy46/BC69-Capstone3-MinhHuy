@@ -1,13 +1,9 @@
 import { ListCumRap, ListHeThongRap,  ThongTinLichChieu } from "../@types";
-import { apiInstance, apiInstanceBearer } from "../constants";
+import { apiInstance } from "../constants";
 
 const api = apiInstance.create({
     baseURL: 'https://movienew.cybersoft.edu.vn/api/QuanLyRap'
 })
-const apiBearer = apiInstanceBearer.create({
-    baseURL: 'https://movienew.cybersoft.edu.vn/api/QuanLyRap'
-})
-
 
 export const quanLyRap = {
     getShowTimeById: (query = '') => api.get<HttpResponse<ThongTinLichChieu>>(`/LayThongTinLichChieuPhim${query}`),
