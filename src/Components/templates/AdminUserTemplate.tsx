@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { PATH } from "../../constants";
 import { useQuanLyNguoiDungSelector } from "../../store/quanLyNguoiDung";
 
-
 export const AdminUserTemplate = () => {
   const [maNhom, setMaNhom] = useState("GP01");
   const [tuKhoa, setTuKhoa] = useState<string | undefined>(undefined);
@@ -66,9 +65,7 @@ export const AdminUserTemplate = () => {
           <p className="truncate ">{item?.hoTen}</p>
           <p className="truncate  text-start">{item?.email}</p>
           <p className="truncate  text-center">{item?.soDT}</p>
-          <p className="truncate  text-center">
-            {item?.maLoaiNguoiDung}
-          </p>
+          <p className="truncate  text-center">{item?.maLoaiNguoiDung}</p>
           <p className="truncate ">{item?.taiKhoan}</p>
           <p className="truncate ">{item?.matKhau}</p>
 
@@ -81,9 +78,10 @@ export const AdminUserTemplate = () => {
                     await quanLyNguoiDungServices.deleteUser(
                       objectToQueryString({ TaiKhoan: item.taiKhoan })
                     );
-                    queryClient.invalidateQueries(
-                      objectToQueryString({ maNhom: maNhom })
-                    );
+                    queryClient.invalidateQueries({
+                      queryKey: ['yourQueryKey', { maNhom: maNhom }] 
+
+                    });
                   } catch (error: any) {
                     toast.error(error?.response?.data.content);
                   }
@@ -99,7 +97,7 @@ export const AdminUserTemplate = () => {
             <button
               className="text-yellow-400 font-[600]"
               onClick={() => {
-                navigate(PATH.addUser, { state: {...item,'maNhom':maNhom }});
+                navigate(PATH.addUser, { state: { ...item, maNhom: maNhom } });
               }}
             >
               Sửa

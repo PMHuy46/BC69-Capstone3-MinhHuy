@@ -65,9 +65,9 @@ export const AdminFilmTemplate = () => {
                     await quanLyPhimServices.deleteFilm(
                       objectToQueryString({ maPhim: item.maPhim })
                     );
-                    queryClient.invalidateQueries(
-                      objectToQueryString({ maNhom: item.maNhom })
-                    );
+                    queryClient.invalidateQueries({
+                      queryKey: ['yourQueryKey', { maNhom: item.maNhom }] 
+                    })
                     toast.success("Xóa phim thành công");
                   } catch (error) {
                     toast.error("Không thành công");
