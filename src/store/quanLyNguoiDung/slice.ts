@@ -61,16 +61,12 @@ export const { reducer: quanLyNguoiDungReducer, actions: quanLyNguoiDungActions 
         builder
             .addCase(dangKy.pending, (state) => {
                 state.isLoadingRegister = true
-                console.log('pending')
             })
             .addCase(dangKy.fulfilled, (state, { payload }) => {
-                console.log('payload', payload)
-                console.log('fulfilled')
                 state.isLoadingRegister = false
                 state.userRegister = payload
             })
             .addCase(dangKy.rejected, (state) => {
-                console.log('rejected')
                 state.isLoadingRegister = false
             })
     }

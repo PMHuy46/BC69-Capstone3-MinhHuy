@@ -49,7 +49,7 @@ export const AdminUserTemplate = () => {
         </div>
       </div>
       <hr className="mt-3" />
-      <div className="grid grid-cols-[5%,15%,15%,10%,15%,15%,15%,10%] gap-1 text-center font-[600] text-[16px] my-3">
+      <div className="grid grid-cols-[5%,15%,15%,10%,15%,15%,15%,5%] gap-1 text-center font-[600] text-[16px] my-3 pe-3">
         <p className=" text-center">Stt</p>
         <p>Họ tên</p>
         <p>Email</p>
@@ -59,52 +59,55 @@ export const AdminUserTemplate = () => {
         <p>Mật khẩu</p>
         <p className="w-[6%]"></p>
       </div>
-      {listUser?.map((item, index) => (
-        <div className="grid grid-cols-[5%,15%,15%,10%,15%,15%,15%,10%] gap-1 ">
-          <p className=" text-center">{index + 1}</p>
-          <p className="truncate ">{item?.hoTen}</p>
-          <p className="truncate  text-start">{item?.email}</p>
-          <p className="truncate  text-center">{item?.soDT}</p>
-          <p className="truncate  text-center">{item?.maLoaiNguoiDung}</p>
-          <p className="truncate ">{item?.taiKhoan}</p>
-          <p className="truncate ">{item?.matKhau}</p>
+      <div className="overflow-scroll h-[65vh] w-full p-0">
+        {listUser?.map((item, index) => (
+          <div className="grid grid-cols-[5%,15%,15%,10%,15%,15%,15%,5%] gap-1">
+            <p className=" text-center">{index + 1}</p>
+            <p className="truncate ">{item?.hoTen}</p>
+            <p className="truncate  text-start">{item?.email}</p>
+            <p className="truncate  text-center">{item?.soDT}</p>
+            <p className="truncate  text-center">{item?.maLoaiNguoiDung}</p>
+            <p className="truncate ">{item?.taiKhoan}</p>
+            <p className="truncate ">{item?.matKhau}</p>
 
-          <p className="flex flex-wrap">
-            <button
-              className="text-red-700 font-[600] me-5"
-              onClick={async () => {
-                if (user?.maLoaiNguoiDung === "QuanTri") {
-                  try {
-                    await quanLyNguoiDungServices.deleteUser(
-                      objectToQueryString({ TaiKhoan: item.taiKhoan })
+            <p className="flex flex-wrap">
+              <button
+                className="text-red-700 font-[600] me-5"
+                onClick={async () => {
+                  if (user?.maLoaiNguoiDung === "QuanTri") {
+                    try {
+                      await quanLyNguoiDungServices.deleteUser(
+                        objectToQueryString({ TaiKhoan: item.taiKhoan })
+                      );
+                      queryClient.invalidateQueries({
+                        queryKey: ["yourQueryKey", { maNhom: maNhom }],
+                      });
+                    } catch (error: any) {
+                      toast.error(error?.response?.data.content);
+                    }
+                  } else {
+                    toast.error(
+                      "Tài khoản không đủ quyền hạn. Hãy kiểm tra lại!!!"
                     );
-                    queryClient.invalidateQueries({
-                      queryKey: ['yourQueryKey', { maNhom: maNhom }] 
-
-                    });
-                  } catch (error: any) {
-                    toast.error(error?.response?.data.content);
                   }
-                } else {
-                  toast.error(
-                    "Tài khoản không đủ quyền hạn. Hãy kiểm tra lại!!!"
-                  );
-                }
-              }}
-            >
-              Xóa
-            </button>
-            <button
-              className="text-yellow-400 font-[600]"
-              onClick={() => {
-                navigate(PATH.addUser, { state: { ...item, maNhom: maNhom } });
-              }}
-            >
-              Sửa
-            </button>
-          </p>
-        </div>
-      ))}
+                }}
+              >
+                Xóa
+              </button>
+              <button
+                className="text-yellow-400 font-[600]"
+                onClick={() => {
+                  navigate(PATH.addUser, {
+                    state: { ...item, maNhom: maNhom },
+                  });
+                }}
+              >
+                Sửa
+              </button>
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

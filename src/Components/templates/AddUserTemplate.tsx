@@ -11,7 +11,6 @@ import { Button, Input, Select } from "antd";
 export const AddUserTemplate = () => {
   const { user } = useQuanLyNguoiDungSelector();
   const { state } = useLocation();
-  console.log(state)
   const navigate = useNavigate()
 
   const {

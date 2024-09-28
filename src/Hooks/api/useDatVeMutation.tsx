@@ -18,7 +18,6 @@ export const useDatVeMutation = () => {
       toast.success(data?.data.content);
     },
     onError: (err: any) => {
-      console.log("124");
       toast.error(err?.response.data.content);
     },
   });

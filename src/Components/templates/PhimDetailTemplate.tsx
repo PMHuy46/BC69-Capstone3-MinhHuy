@@ -7,7 +7,7 @@ import { Phim } from "../../@types";
 import { ModalDatVe } from "../ui";
 import { quanLyNguoiDungActions } from "../../store/quanLyNguoiDung";
 import { useAppDispatch } from "../../store";
-
+import ReactPlayer from "react-player";
 
 export const PhimDetailTemplate = () => {
   const { id = "" } = useParams();
@@ -19,16 +19,21 @@ export const PhimDetailTemplate = () => {
 
   return (
     <div>
-      <div className="flex justify-evenly gap-[50px]">
+      <div className="grid grid-cols-[40%,60%] gap-10">
         <div>
-          <img src={phimDetail?.hinhAnh} alt="..." />
+          <ReactPlayer
+            url={phimDetail?.trailer}
+            controls={true}
+            width="100%"
+            light={phimDetail?.hinhAnh}
+          />
         </div>
-        <div>
-          <p>{phimDetail?.tenPhim}</p>
+        <div className="">
+          <p className="text-[30px] font-[700]">{phimDetail?.tenPhim}</p>
           <p>{phimDetail?.moTa}</p>
         </div>
       </div>
-      <div className="h-[22vh]">
+      <div >
         <Tabs
           items={showTime?.heThongRapChieu.map((item) => ({
             key: item.maHeThongRap,

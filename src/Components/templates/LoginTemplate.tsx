@@ -18,7 +18,6 @@ export const LoginTemplate = () => {
   const navigate = useNavigate();
 
   const loginMutation = useLoginMutation();
-  console.log(loginMutation)
 
   return (
     <div>

@@ -2,7 +2,7 @@ export const Footer = () => {
   return (
     <div>
       <div >
-        <div className="grid grid-cols-4 mt-[30px] bg-blue-900 text-white py-[30px] px-10">
+        <div className="grid grid-cols-4  bg-blue-900 text-white py-[30px] px-10">
             <div>
               <h5>ARCHIVES</h5>
               <ul>

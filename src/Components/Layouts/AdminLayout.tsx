@@ -35,7 +35,6 @@ const items: MenuItem[] = [
   getItem("Films", "film", <FileOutlined />, [
     getItem("Film data", "admin/film"),
     getItem("Add New", "/admin/addFilm"),
-    getItem("ShowTime", "/admin/showtime",),
   ]),
 ];
 

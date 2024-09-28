@@ -5,9 +5,7 @@ export const createFileFromUrl = async (url: string) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const blob = await response.blob();
-    console.log(blob)
   
   } catch (error) {
-    console.error("Error fetching the file:", error);
   }
 };

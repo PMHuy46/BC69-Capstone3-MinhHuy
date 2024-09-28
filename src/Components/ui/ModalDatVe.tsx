@@ -10,6 +10,7 @@ import { objectToQueryString } from "../../utils";
 import { LoaiGhe } from "../../@types";
 import { useAppDispatch } from "../../store";
 import { useDatVeMutation } from "../../Hooks/api/useDatVeMutation";
+import { Alert, Button, Space } from "antd";
 
 const Ghe = styled.div`
   width: 40px;
@@ -33,9 +34,10 @@ const Ghe = styled.div`
 `;
 
 export const ModalDatVe = () => {
-  const { maLichChieu, danhSachGheDangChon,danhSachGheDat } = useQuanLyNguoiDungSelector();
+  const { maLichChieu, danhSachGheDangChon, danhSachGheDat, user } =
+    useQuanLyNguoiDungSelector();
   const dispatch = useAppDispatch();
-  const datVe= useDatVeMutation()
+  const datVe = useDatVeMutation();
 
   const { data: danhSachPhongVe } = useQuery({
     queryKey: ["DanhSachPhongVe", maLichChieu],
@@ -64,9 +66,6 @@ export const ModalDatVe = () => {
               >
                 {ghe.tenGhe}
               </Ghe>
-              {/* check login của user
-                navigate(-1) để trở về trang trước đó
-              */}
             </div>
           ))}
         </div>
@@ -111,8 +110,9 @@ export const ModalDatVe = () => {
                       className="border-2  border-black text-red px-3 text-red-700 "
                       style={{ cursor: "pointer" }}
                       onClick={() => {
-                        dispatch(quanLyNguoiDungActions.deleteChoose(item.maGhe))
-                        console.log("aaa")
+                        dispatch(
+                          quanLyNguoiDungActions.deleteChoose(item.maGhe)
+                        );
                       }}
                     >
                       X
@@ -129,14 +129,33 @@ export const ModalDatVe = () => {
             )}
           </tbody>
         </table>
-        <button
-          className="bg-red-700 text-yellow-500 px-[15px] mt-3 text-[20px] font-bold rounded-md border-2 border-black"
-          onClick={() => {
-            datVe.mutate({"maLichChieu":maLichChieu,"danhSachVe":danhSachGheDat})
-          }}
-        >
-          Đặt vé
-        </button>
+        {user ? (
+          <button
+            className="bg-red-700 text-yellow-500 px-[15px] mt-3 text-[20px] font-bold rounded-md border-2 border-black"
+            onClick={() => {
+              datVe.mutate({
+                maLichChieu: maLichChieu,
+                danhSachVe: danhSachGheDat,
+              });
+            }}
+          >
+            Đặt vé
+          </button>
+        ) : (
+          <Alert
+          className="flex items-center"
+            message="Thông báo"
+            description="Đăng nhập để đặt vé"
+            type="info"
+            action={
+              <Space >
+                <Button size="small" type="primary">
+                  Đăng nhập
+                </Button>
+              </Space>
+            }
+          />
+        )}
       </div>
     </div>
   );

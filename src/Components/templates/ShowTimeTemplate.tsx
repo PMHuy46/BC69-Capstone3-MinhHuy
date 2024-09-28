@@ -43,7 +43,6 @@ export const ShowTimeTemplate = () => {
   const onSubmit: SubmitHandler<CreateShowTimeType> = async (
     values: CreateShowTimeType
   ) => {
-    console.log(user?.maLoaiNguoiDung)
     if (user?.maLoaiNguoiDung == "QuanTri") {
       const newValues = {
         maPhim: state.maPhim,
@@ -51,7 +50,6 @@ export const ShowTimeTemplate = () => {
         giaVe: values.giaVe,
         ngayChieuGioChieu: values.ngayChieuGioChieu,
       };
-      console.log(newValues)
      try {
       const result = await quanLyDatVe.createLichChieu(newValues)
       toast.success(result.data.message)
@@ -60,7 +58,7 @@ export const ShowTimeTemplate = () => {
       toast.error('Tạo Lịch chiếu không thành công')
     }
     }else{
-    console.log('Tài khoản không đủ quyền')
+    toast.error('Tài khoản không đủ quyền')
 
     }
   };

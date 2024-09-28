@@ -6,7 +6,7 @@ import { quanLyPhimServices } from "../../services";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../constants";
-import { Select } from "antd";
+import { Image, Select } from "antd";
 import { useState } from "react";
 
 export const AdminFilmTemplate = () => {
@@ -15,8 +15,6 @@ export const AdminFilmTemplate = () => {
 
   const { data } = useDataDetail.getDanhSach("maNhom", maNhom);
   const phimArray = data as Phim[];
-
-  console.log(phimArray);
 
   const queryClient = useQueryClient();
 
@@ -45,7 +43,7 @@ export const AdminFilmTemplate = () => {
         <p>Mô tả</p>
         <p></p>
       </div>
-      <div className="overflow-scroll h-[90vh] ">
+      <div className="overflow-scroll h-[63vh] ">
         {phimArray?.map((item) => (
           <div
             className="grid grid-cols-[10%,20%,20%,40%,10%]  mb-3 items-center"
@@ -53,7 +51,10 @@ export const AdminFilmTemplate = () => {
           >
             <div className="text-center">{item?.maPhim}</div>
             <div>
-              <img src={item?.hinhAnh} alt="" className="px-10 py-2" />
+              <Image
+                width={200}
+                src={item?.hinhAnh}
+              />
             </div>
             <div>{item?.tenPhim}</div>
             <div className="px-2">{item?.moTa}</div>
@@ -66,15 +67,15 @@ export const AdminFilmTemplate = () => {
                       objectToQueryString({ maPhim: item.maPhim })
                     );
                     queryClient.invalidateQueries({
-                      queryKey: ['yourQueryKey', { maNhom: item.maNhom }] 
-                    })
+                      queryKey: ["yourQueryKey", { maNhom: item.maNhom }],
+                    });
                     toast.success("Xóa phim thành công");
                   } catch (error) {
                     toast.error("Không thành công");
                   }
                 }}
               >
-               <i className="fa-solid fa-trash"></i>
+                <i className="fa-solid fa-trash"></i>
               </button>
               <button
                 className="text-green-400 font-[600]"
@@ -87,7 +88,13 @@ export const AdminFilmTemplate = () => {
               <button
                 className="text-yellow-400 font-[600]"
                 onClick={() => {
-                  navigate(PATH.showtime, { state: {'maPhim':item.maPhim,'tenPhim':item.tenPhim,'hinhAnh':item.hinhAnh} });
+                  navigate(PATH.showtime, {
+                    state: {
+                      maPhim: item.maPhim,
+                      tenPhim: item.tenPhim,
+                      hinhAnh: item.hinhAnh,
+                    },
+                  });
                 }}
               >
                 <i className="fa-solid fa-calendar-days"></i>
